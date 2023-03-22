@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rock Paper Scissors</title>
+</head>
+<body>
+    <script>
+        function getComputerChoice () {
+            let choices = ['rock', 'paper', 'scissors'];
+            return choices[Math.floor(Math.random() * choices.length)];
+        }
+
+        function getPlayerChoice () {
+            let selectedChoice = '';
+            do {
+                selectedChoice = prompt('Please select rock, paper or scissors');
+                selectedChoice.toLowerCase();
+            } while ((selectedChoice !== 'rock') && (selectedChoice !== 'paper') && (selectedChoice !== 'scissors'));
+            return selectedChoice;
+        }
+
+        function playRound (getComputerChoice, getPlayerChoice) {
+            let winLoseTie;
+            if (getComputerChoice === getPlayerChoice)
+                console.log('Tie!');
+            if (getComputerChoice === 'rock'){
+                if (getPlayerChoice === 'paper'){
+                    console.log('You win! paper beats rock');
+                    winLoseTie = 0;
+                }
+                if (getPlayerChoice === 'scissors'){
+                    console.log('You lose! rock beats scissors');
+                    winLoseTie = 1;
+                }
+            }
+            if (getComputerChoice === 'paper'){
+                if (getPlayerChoice === 'scissors'){
+                    console.log('You win! scissors beat paper');
+                    winLoseTie = 0;
+                }
+                if (getPlayerChoice === 'rock'){
+                    console.log('You lose! paper beats rock');
+                    winLoseTie = 1;
+                }
+            }
+            if (getComputerChoice === 'scissors'){
+                if (getPlayerChoice === 'rock'){
+                    console.log('You win! rock beats scissors');
+                    winLoseTie = 0;
+                }
+                if (getPlayerChoice === 'paper'){
+                    console.log('You lose! scissors beat paper');
+                    winLoseTie = 1;
+                }
+            }
+            return winLoseTie;
+        }
+
+        function game () {
+            let whoWon;
+            let playerTrack = 0;
+            let computerTrack = 0;
+            for (let i=0; i<5; i++){
+                whoWon = playRound(getComputerChoice(), getPlayerChoice());
+                if (whoWon === 0)
+                    playerTrack++;
+                if (whoWon === 1)
+                    computerTrack++;
+            }
+            if (playerTrack === computerTrack)
+                return console.log('Tie!');
+            if (playerTrack > computerTrack)
+                return console.log('Player wins!');
+            else
+                return console.log('Computer wins!');
+        }
+        
+        game();
+    </script>
+</body>
+</html>
