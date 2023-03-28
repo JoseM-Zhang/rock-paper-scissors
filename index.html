@@ -3,9 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <title>Rock Paper Scissors</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="container">
+        <div class="results">
+            <h2 id="winnerResult"></h2>
+            <h2 id="resultText"></h2>
+            <h3 id="playerScore">Player Score: 0</h3>
+            <h3 id="computerScore">Computer Score: 0</h3>
+        </div>
+
+        <div class="playerChoices">
+            <button onclick="playRound(getComputerChoice(), 'rock')">Rock</button>
+            <button onclick="playRound(getComputerChoice(), 'paper')">Paper</button>
+            <button onclick="playRound(getComputerChoice(), 'scissors')">Scissors</button>
+        </div>
+    </div>
+
     <script>
+        let playerTrack = 0;
+        let computerTrack = 0;
+
+        function showResult (textToShow, playerWin){
+            document.getElementById("winnerResult").innerText=('');
+            document.getElementById("resultText").innerText=(textToShow);
+            if(playerWin)
+                document.getElementById("playerScore").innerText=(`Player Score: ${++playerTrack}`);
+            else if (playerWin === false)
+                document.getElementById("computerScore").innerText=(`Computer Score: ${++computerTrack}`);
+
+            if(playerTrack == 5 || computerTrack == 5){
+                
+                if(playerTrack == 5)
+                    document.getElementById("winnerResult").innerText=('Player Wins the round!');
+                
+                if(computerTrack == 5)
+                    document.getElementById("winnerResult").innerText=('Computer Wins the round!');
+                
+                playerTrack = 0;
+                computerTrack = 0;
+                document.getElementById("playerScore").innerText=(`Player Score: ${playerTrack}`);
+                document.getElementById("computerScore").innerText=(`Computer Score: ${computerTrack}`);
+            }
+
+            
+        }
+
         function getComputerChoice () {
             let choices = ['rock', 'paper', 'scissors'];
             return choices[Math.floor(Math.random() * choices.length)];
@@ -21,43 +65,37 @@
         }
 
         function playRound (getComputerChoice, getPlayerChoice) {
-            let winLoseTie;
+            let userWinOrLose;
             if (getComputerChoice === getPlayerChoice)
-                console.log('Tie!');
+                showResult('Tie!');
             if (getComputerChoice === 'rock'){
                 if (getPlayerChoice === 'paper'){
-                    console.log('You win! paper beats rock');
-                    winLoseTie = 0;
+                    showResult('You win! paper beats rock', true);
                 }
                 if (getPlayerChoice === 'scissors'){
-                    console.log('You lose! rock beats scissors');
-                    winLoseTie = 1;
+                    showResult('You lose! rock beats scissors', false);
                 }
             }
             if (getComputerChoice === 'paper'){
                 if (getPlayerChoice === 'scissors'){
-                    console.log('You win! scissors beat paper');
-                    winLoseTie = 0;
+                    showResult('You win! scissors beat paper', true);
                 }
                 if (getPlayerChoice === 'rock'){
-                    console.log('You lose! paper beats rock');
-                    winLoseTie = 1;
+                    showResult('You lose! paper beats rock', false);
                 }
             }
             if (getComputerChoice === 'scissors'){
                 if (getPlayerChoice === 'rock'){
-                    console.log('You win! rock beats scissors');
-                    winLoseTie = 0;
+                    showResult('You win! rock beats scissors', true);
                 }
                 if (getPlayerChoice === 'paper'){
-                    console.log('You lose! scissors beat paper');
-                    winLoseTie = 1;
+                    showResult('You lose! scissors beat paper', false);
                 }
             }
-            return winLoseTie;
+            return userWinOrLose;
         }
 
-        function game () {
+        /*function game () {
             let whoWon;
             let playerTrack = 0;
             let computerTrack = 0;
@@ -69,14 +107,14 @@
                     computerTrack++;
             }
             if (playerTrack === computerTrack)
-                return console.log('Tie!');
+                return showResult('Tie!');
             if (playerTrack > computerTrack)
-                return console.log('Player wins!');
+                return showResult('Player wins!');
             else
-                return console.log('Computer wins!');
+                return showResult('Computer wins!');
         }
         
-        game();
+        game();*/
     </script>
 </body>
 </html>
